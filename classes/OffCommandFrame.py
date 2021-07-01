@@ -1,14 +1,14 @@
 from tkinter import *
 
 class OffCommandFrame(Frame):
-    def __init__(self, master, controller):
+    def __init__(self, master, controller, color):
         self.WIDTH = 512
         self.HEIGHT = 384
 
         self.ct = controller
-        color = "gray35"
+        # color = "gray35"
 
-        self.mainFrame = Frame(master)
+        self.mainFrame = Frame(master, bg=color)
         Frame.__init__(self, self.mainFrame, width=self.WIDTH, height=self.HEIGHT, background=color)
         self.grid(row=0, column=0)
 

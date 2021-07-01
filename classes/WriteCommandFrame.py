@@ -3,50 +3,58 @@ from tkinter import ttk
 
 
 class WriteCommandFrame(Frame):
-    def __init__(self, master, controller):
+    def __init__(self, master, controller, color):
         self.WIDTH = 512
         self.HEIGHT = 384
 
         self.ct = controller
-        color = "gray35"
+        # color = "gray35"
 
-        self.mainFrame = Frame(master)
+        self.mainFrame = Frame(master, bg=color)
         Frame.__init__(self, self.mainFrame, width=self.WIDTH, height=self.HEIGHT, background=color)
         self.grid(row=0, column=0)
 
         self.initWidget()
     
     def initWidget(self):
+        # get
+        self.getButton = Button(self, text="GET", font = "Helvetica 10 bold", width=10, height=2, bg='lightblue', command=self.getCommand)
+        self.getButton.grid(row=0, column=0, padx=(5, 30), pady=(10, 10))
+
         # W COMMAND
         self.wButton = Button(self, text="W", font = "Helvetica 10 bold", width=10, height=2, command=self.wCommand)
-        self.wButton.grid(row=0, column=0, padx=(20, 20), pady=(10, 10))
+        self.wButton.grid(row=1, column=0, padx=(5, 30), pady=(10, 10))
         
         self.WIDNUM = 4
         self.wVars = [StringVar() for i in range(self.WIDNUM)]
         self.wEntrys = [Entry(self, width=3, font = "Helvetica 14 bold", textvariable=self.wVars[i]) for i in range(self.WIDNUM)]
         for i in range(self.WIDNUM):
-            self.wEntrys[i].grid(row=0, column=i+1, padx=(10, 10), pady=(10, 10))
+            self.wEntrys[i].grid(row=1, column=i+1, padx=(30, 30), pady=(10, 10))
 
         # WBPF COMMAND
         self.wbpfButton = Button(self, text="WBPF", font = "Helvetica 10 bold", width=10, height=2, command=self.wbpfCommand)
-        self.wbpfButton.grid(row=1, column=0, padx=(20, 20), pady=(10, 10))
+        self.wbpfButton.grid(row=2, column=0, padx=(5, 30), pady=(10, 10))
         
         self.WBPFIDNUM = 4
         self.wbpfVars = [StringVar() for i in range(self.WBPFIDNUM)]
         self.wbpfEntrys = [Entry(self, width=3, font = "Helvetica 14 bold", textvariable=self.wbpfVars[i]) for i in range(self.WBPFIDNUM)]
         for i in range(self.WBPFIDNUM):
-            self.wbpfEntrys[i].grid(row=1, column=i+1, padx=(20, 20), pady=(10, 10))
+            self.wbpfEntrys[i].grid(row=2, column=i+1, padx=(30, 30), pady=(10, 10))
 
         # WBP COMMAND
         self.wbpButton = Button(self, text="WBP", font = "Helvetica 10 bold", width=10, height=2, command=self.wbpCommand)
-        self.wbpButton.grid(row=2, column=0, padx=(20, 20), pady=(10, 10))
+        self.wbpButton.grid(row=3, column=0, padx=(5, 30), pady=(10, 10))
         
         self.WBPIDNUM = 4
         self.wbpVars = [StringVar() for i in range(self.WBPIDNUM)]
         self.wbpEntrys = [Entry(self, width=3, font = "Helvetica 14 bold", textvariable=self.wbpVars[i]) for i in range(self.WBPIDNUM)]
         for i in range(self.WBPIDNUM):
-            self.wbpEntrys[i].grid(row=2, column=i+1, padx=(20, 20), pady=(10, 10))
+            self.wbpEntrys[i].grid(row=3, column=i+1, padx=(30, 30), pady=(10, 10))
     
+    def getCommand(self):
+        cmd = "!get#"
+        print(cmd)
+        self.ct.sendToArduino(cmd)
 
     def wCommand(self):
         wId = [self.wEntrys[i].get() for i in range(self.WIDNUM)]

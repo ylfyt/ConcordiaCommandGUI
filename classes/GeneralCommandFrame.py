@@ -3,14 +3,14 @@ from tkinter import ttk
 
 
 class GeneralCommandFrame(Frame):
-    def __init__(self, master, controller):
+    def __init__(self, master, controller, color):
         self.WIDTH = 512
         self.HEIGHT = 384
 
         self.ct = controller
-        color = "gray35"
+        # color = "gray35"
 
-        self.mainFrame = Frame(master)
+        self.mainFrame = Frame(master, bg=color)
         Frame.__init__(self, self.mainFrame, width=self.WIDTH, height=self.HEIGHT, background=color)
         self.grid(row=0, column=0)
 
@@ -20,33 +20,25 @@ class GeneralCommandFrame(Frame):
         self.defButton = Button(self, text="DEF", font = "Helvetica 10 bold", width=10, height=2, command=self.defCommand)
         self.defButton.grid(row=0, column=0, padx=(5, 5), pady=(10, 10))
 
-        self.labelTextPage = Label(self, text="Page : ", font = "Helvetica 14")
+        self.labelTextPage = Label(self, text="Page : ", font = "Helvetica 14", bg='lightblue')
         self.labelTextPage.grid(row=1, column=0, padx=(5, 5), pady=(10, 10))
 
         self.pageOption = [str(i) for i in range(76)] 
         self.pageOptionCombo = ttk.Combobox(self, values=self.pageOption, state="readonly", font = "Helvetica 12", width=10)
         self.pageOptionCombo.grid(row=1, column=1, padx=(5, 5), pady=(10, 10))
 
-        self.labelTextStep = Label(self, text="Step : ", font = "Helvetica 14")
+        self.labelTextStep = Label(self, text="Step : ", font = "Helvetica 14", bg='lightblue')
         self.labelTextStep.grid(row=1, column=2, padx=(5, 5), pady=(10, 10))
 
         self.stepOption = [str(i+1) for i in range(20)] 
         self.stepOptionCombo = ttk.Combobox(self, values=self.stepOption, state="readonly", font = "Helvetica 12", width=10)
         self.stepOptionCombo.grid(row=1, column=3, padx=(5, 5), pady=(10, 10))
         
-        self.gButton = Button(self, text="G", font = "Helvetica 12", command=self.gCommand)
+        self.gButton = Button(self, text="G",width=7, font = "Helvetica 12", command=self.gCommand)
         self.gButton.grid(row=1, column=4, padx=(5, 5), pady=(10, 10))
 
         self.pageOptionCombo.bind("<<ComboboxSelected>>", self.pageSelected)
         self.stepOptionCombo.bind("<<ComboboxSelected>>", self.stepSelected)
-
-        self.getButton = Button(self, text="GET", font = "Helvetica 10 bold", width=10, height=2, command=self.getCommand)
-        self.getButton.grid(row=2, column=0, padx=(5, 5), pady=(10, 10))
-
-    def getCommand(self):
-        cmd = "!get#"
-        print(cmd)
-        self.ct.sendToArduino(cmd)
 
     def defCommand(self):
         cmd = "!def#"
