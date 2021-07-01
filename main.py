@@ -13,6 +13,7 @@ class MainWindow(Tk):
         self.title("Concordia Command Center")
         # self.geometry("1024x768")
         self.resizable(False, False)
+        self.iconbitmap(r'img/dago_concordia.ico')
 
         self.arduino = Arduino()
 

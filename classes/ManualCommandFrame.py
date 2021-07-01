@@ -16,7 +16,7 @@ class ManualCommandFrame(Frame):
     
     def initWidget(self):
         self.cmdVar = StringVar()
-        self.commandEntry = Entry(self, width=87, textvariable=self.cmdVar, font = "Helvetica 14 bold")
+        self.commandEntry = Entry(self, width=50, textvariable=self.cmdVar, font = "Helvetica 14 bold")
         self.commandEntry.grid(row=0, column=0, padx=(5, 5))
         self.commandEntry.bind('<Return>', self.sendCommandEnter)
 
