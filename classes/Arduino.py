@@ -13,19 +13,29 @@ class Arduino:
 
     def write_read(self):
         if hasattr(self, 'arduinoSerial'):
-            self.arduinoSerial.write(bytes(self.command, 'utf-8'))
-            time.sleep(0.05)
-            data = self.arduinoSerial.readlines()
-            for line in data:
-                line = line.decode("utf-8")
-                print(line, end="")
+            try:
+                self.arduinoSerial.write(bytes(self.command, 'utf-8'))
+                time.sleep(0.05)
+            except:
+                print("Cannot sending data")
+                return
             
-            if (self.command == "!save#"):
-                time.sleep(2)
+            try:
                 data = self.arduinoSerial.readlines()
                 for line in data:
                     line = line.decode("utf-8")
                     print(line, end="")
+                
+                if (self.command == "!save#"):
+                    time.sleep(2)
+                    data = self.arduinoSerial.readlines()
+                    for line in data:
+                        line = line.decode("utf-8")
+                        print(line, end="")
+            except:
+                print("Cannot get data")
+        else:
+            print("Port disconnected")
     
     def connect(self, port, baudrate, timeout):
         try:
