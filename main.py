@@ -1,10 +1,10 @@
 # Importing Libraries
-from ctypes.wintypes import SERVICE_STATUS_HANDLE
-from Arduino import Arduino
-from typing import Collection
-from OffCommandFrame import OffCommandFrame
-from ManualFrame import ManualFrame
 from tkinter import *
+from Arduino import Arduino
+
+from OffCommandFrame import OffCommandFrame
+from ManualCommandFrame import ManualCommandFrame
+from GeneralCommandFrame import GeneralCommandFrame
 
 class MainWindow(Tk):
     def __init__(self):
@@ -20,11 +20,14 @@ class MainWindow(Tk):
         self.container.grid_rowconfigure(0, weight=1)
         self.container.grid_columnconfigure(0, weight=1)
 
-        self.offCommandFrame = OffCommandFrame(self.container, self)
-        self.offCommandFrame.gridMain(row=0, column=0, sticky="nsew")
+        self.generalCommandFrame = GeneralCommandFrame(self.container, self)
+        self.generalCommandFrame.gridMain(row=0, column=0, sticky="nsew")
 
-        self.manualFrame = ManualFrame(self.container, self)
-        self.manualFrame.gridMain(row=1, column=0, sticky="nsew")
+        self.offCommandFrame = OffCommandFrame(self.container, self)
+        self.offCommandFrame.gridMain(row=0, column=1, sticky="nsew")
+
+        self.manualCommandFrame = ManualCommandFrame(self.container, self)
+        self.manualCommandFrame.gridMain(row=1, column=0, sticky="nsew")
 
 
     def sendToArduino(self, cmd):

@@ -1,6 +1,6 @@
 from tkinter import *
 
-class ManualFrame(Frame):
+class ManualCommandFrame(Frame):
     def __init__(self, master, controller):
         self.WIDTH = 900
         self.HEIGHT = 50
@@ -16,7 +16,7 @@ class ManualFrame(Frame):
     
     def initWidget(self):
         self.cmdVar = StringVar()
-        self.commandEntry = Entry(self, width=150, textvariable=self.cmdVar)
+        self.commandEntry = Entry(self, width=87, textvariable=self.cmdVar, font = "Helvetica 14 bold")
         self.commandEntry.grid(row=0, column=0, padx=(5, 5))
         self.commandEntry.bind('<Return>', self.sendCommandEnter)
 
@@ -36,7 +36,7 @@ class ManualFrame(Frame):
         self.cmdVar.set("")
         if (cmd != ""):
             print(cmd)
-            # self.ct.sendToArduino(cmd)
+            self.ct.sendToArduino(cmd)
 
         
     
