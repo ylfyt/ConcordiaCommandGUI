@@ -69,7 +69,8 @@ class OffCommandFrame(Frame):
             print("Python: " + command)
             
             # sending command to arduino via port
-            self.ct.write_read(command)
+            print(command)
+            self.ct.sendToArduino(command)
         else:
             print("Python: Invalid input")
 
@@ -78,34 +79,54 @@ class OffCommandFrame(Frame):
             var.set('')
         
     def oaCommand(self):
-        print("!oa#")
+        cmd = "!oa#"
+        print(cmd)
+        self.ct.sendToArduino(cmd)
 
     def olaCommand(self):
-        print("!ola#")
+        cmd = "!ola#"
+        print(cmd)
+        self.ct.sendToArduino(cmd)
 
     def oraCommand(self):
-        print("!ora#")
+        cmd = "!ora#"
+        print(cmd)
+        self.ct.sendToArduino(cmd)
 
     def ohCommand(self):
-        print("!oh#")
+        cmd = "!oh#"
+        print(cmd)
+        self.ct.sendToArduino(cmd)
 
     def ofCommand(self):
-        print("!of#")
+        cmd = "!of#"
+        print(cmd)
+        self.ct.sendToArduino(cmd)
 
     def olfCommand(self):
-        print("!olf#")
+        cmd = "!olf#"
+        print(cmd)
+        self.ct.sendToArduino(cmd)
 
     def orfCommand(self):
-        print("!orf#")
+        cmd = "!orf#"
+        print(cmd)
+        self.ct.sendToArduino(cmd)
 
     def ohipCommand(self):
-        print("!ohip#")
+        cmd = "!ohip#"
+        print(cmd)
+        self.ct.sendToArduino(cmd)
 
     def offAllCommand(self):
-        print("!off#")
+        cmd = "!off#"
+        print(cmd)
+        self.ct.sendToArduino(cmd)
     
     def onAllCommand(self):
-        print("!on#")
+        cmd = "!on#"
+        print(cmd)
+        self.ct.sendToArduino(cmd)
         
     
     def gridMain(self, **kwargs): ######## grid -> grid_

@@ -1,11 +1,10 @@
 # Importing Libraries
-
-
+from ctypes.wintypes import SERVICE_STATUS_HANDLE
+from Arduino import Arduino
 from typing import Collection
 from OffCommandFrame import OffCommandFrame
+from ManualFrame import ManualFrame
 from tkinter import *
-import serial
-import time
 
 class MainWindow(Tk):
     def __init__(self):
@@ -14,7 +13,7 @@ class MainWindow(Tk):
         self.geometry("1024x768")
         self.resizable(False, False)
 
-        # self.arduino = serial.Serial(port='COM9', baudrate=9600, timeout=.1)
+        self.arduino = Arduino()
 
         self.container = Frame(self, bd=5)
         self.container.pack(side="top", fill="both", expand=True)
@@ -24,16 +23,12 @@ class MainWindow(Tk):
         self.offCommandFrame = OffCommandFrame(self.container, self)
         self.offCommandFrame.gridMain(row=0, column=0, sticky="nsew")
 
+        self.manualFrame = ManualFrame(self.container, self)
+        self.manualFrame.gridMain(row=1, column=0, sticky="nsew")
 
-    def write_read(self, x):
-        return
-        x += ";"
-        self.arduino.write(bytes(x, 'utf-8'))
-        time.sleep(0.05)
-        # data = arduino.readline()
-        data = self.arduino.readline()
-        data = data.decode("utf-8")
-        print(data)
+
+    def sendToArduino(self, cmd):
+        self.arduino.sendCommand(cmd)
 
 
 if __name__ == "__main__":
