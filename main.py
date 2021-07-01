@@ -1,10 +1,10 @@
 # Importing Libraries
 from tkinter import *
-from Arduino import Arduino
+from classes.Arduino import Arduino
 
-from OffCommandFrame import OffCommandFrame
-from ManualCommandFrame import ManualCommandFrame
-from GeneralCommandFrame import GeneralCommandFrame
+from classes.OffCommandFrame import OffCommandFrame
+from classes.ManualCommandFrame import ManualCommandFrame
+from classes.GeneralCommandFrame import GeneralCommandFrame
 
 class MainWindow(Tk):
     def __init__(self):
