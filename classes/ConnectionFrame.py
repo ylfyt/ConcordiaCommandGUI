@@ -31,9 +31,16 @@ class ConnectionFrame(Frame):
         self.connectButton.grid(row=0, column=3, padx=(5, 5), pady=(10, 10))
         
     def refresh(self):
-        con = self.getPortList()
-        print(con)
-        self.portOptionCombo['values'] = con
+        cons = self.getPortList()
+        if (len(cons) != 0):
+            print("Port Found :", end=" ")
+            for con in cons:
+                print(con, end="; ")
+            print()
+        else:
+            print("Cannot found any port")
+        
+        self.portOptionCombo['values'] = cons
         self.portOptionCombo.set('')
 
     def connect(self):
