@@ -1,3 +1,4 @@
+from ast import Param
 from tkinter import *
 from tkinter import ttk
 
@@ -21,121 +22,107 @@ class WriteCommandFrame(Frame):
         self.getButton = Button(self, text="GET", font = "Helvetica 10 bold", width=10, height=2, bg='lightblue', command=self.getCommand)
         self.getButton.grid(row=0, column=0, padx=(5, 30), pady=(10, 10))
 
-        # W COMMAND
-        self.wButton = Button(self, text="W", font = "Helvetica 10 bold", width=10, height=2, command=self.wCommand)
-        self.wButton.grid(row=1, column=0, padx=(5, 30), pady=(10, 10))
-        
-        self.WIDNUM = 4
-        self.wVars = [StringVar() for i in range(self.WIDNUM)]
-        self.wEntrys = [Entry(self, width=3, font = "Helvetica 14 bold", textvariable=self.wVars[i]) for i in range(self.WIDNUM)]
-        for i in range(self.WIDNUM):
-            self.wEntrys[i].grid(row=1, column=i+1, padx=(30, 30), pady=(10, 10))
+        # SAVE
+        self.saveButton = Button(self, text="SAVE", font = "Helvetica 10 bold", width=10, height=2, bg='lightgreen', command=self.saveCommand)
+        self.saveButton.grid(row=0, column=1, padx=(30, 5), pady=(10, 10))
 
-        # WBPF COMMAND
-        self.wbpfButton = Button(self, text="WBPF", font = "Helvetica 10 bold", width=10, height=2, command=self.wbpfCommand)
-        self.wbpfButton.grid(row=2, column=0, padx=(5, 30), pady=(10, 10))
-        
-        self.WBPFIDNUM = 4
-        self.wbpfVars = [StringVar() for i in range(self.WBPFIDNUM)]
-        self.wbpfEntrys = [Entry(self, width=3, font = "Helvetica 14 bold", textvariable=self.wbpfVars[i]) for i in range(self.WBPFIDNUM)]
-        for i in range(self.WBPFIDNUM):
-            self.wbpfEntrys[i].grid(row=2, column=i+1, padx=(30, 30), pady=(10, 10))
+        # WRITE STEP COMMAND
+        self.writeStepButton = Button(self, text="WRITE STEP", font = "Helvetica 10 bold", width=10, height=2, command=self.writeStepCommand)
+        self.writeStepButton.grid(row=1, column=0, padx=(5, 5), pady=(10, 10))
 
-        # WBP COMMAND
-        self.wbpButton = Button(self, text="WBP", font = "Helvetica 10 bold", width=10, height=2, command=self.wbpCommand)
-        self.wbpButton.grid(row=3, column=0, padx=(5, 30), pady=(10, 10))
+        self.writeStepCommadOption = ["w", "wh", "wra", "wla", "whip", "wf", "wrf", "wlf"]
+        self.writeStepCommanOptionCombo = ttk.Combobox(self, values=self.writeStepCommadOption, state="readonly", font = "Helvetica 12 bold", width=7)
+        self.writeStepCommanOptionCombo.grid(row=1, column=1, padx=(0, 5), pady=(10, 10))
+
+        self.WRITESTEPNUM = 4
+        self.writeStepVars = [StringVar() for i in range(self.WRITESTEPNUM)]
+        self.writeStepEntrys = [Entry(self, width=3, font = "Helvetica 14 bold", textvariable=self.writeStepVars[i]) for i in range(self.WRITESTEPNUM)]
+        for i in range(self.WRITESTEPNUM):
+            self.writeStepEntrys[i].grid(row=1, column=i+2, padx=(10, 10), pady=(10, 10))
         
-        self.WBPIDNUM = 4
-        self.wbpVars = [StringVar() for i in range(self.WBPIDNUM)]
-        self.wbpEntrys = [Entry(self, width=3, font = "Helvetica 14 bold", textvariable=self.wbpVars[i]) for i in range(self.WBPIDNUM)]
-        for i in range(self.WBPIDNUM):
-            self.wbpEntrys[i].grid(row=3, column=i+1, padx=(30, 30), pady=(10, 10))
+
+        # WRITE PAGE COMMAND
+        self.writePageButton = Button(self, text="WRITE PAGE", font = "Helvetica 10 bold", width=10, height=2, command=self.writePageCommand)
+        self.writePageButton.grid(row=2, column=0, padx=(5, 5), pady=(10, 10))
+
+        self.writePageCommadOption = ["wBP", "wBPra", "wBPla", "wBPhip", "wBPf", "wBPrf", "wBPlf"]
+        self.writePageCommanOptionCombo = ttk.Combobox(self, values=self.writePageCommadOption, state="readonly", font = "Helvetica 12 bold", width=7)
+        self.writePageCommanOptionCombo.grid(row=2, column=1, padx=(0, 5), pady=(10, 10))
+
+        self.WRITEPAGENUM = 4
+        self.writePageVars = [StringVar() for i in range(self.WRITEPAGENUM)]
+        self.writePageEntrys = [Entry(self, width=3, font = "Helvetica 14 bold", textvariable=self.writePageVars[i]) for i in range(self.WRITEPAGENUM)]
+        for i in range(self.WRITEPAGENUM):
+            self.writePageEntrys[i].grid(row=2, column=i+2, padx=(10, 10), pady=(10, 10))
+        
     
     def getCommand(self):
         cmd = "!get#"
         print(cmd)
         self.ct.sendToArduino(cmd)
 
-    def wCommand(self):
-        wId = [self.wEntrys[i].get() for i in range(self.WIDNUM)]
-        
-        param = ""
-        for i in range(len(wId)):
-            id = wId[i]
-            if (id != ''):
-                try:
-                    id = int(id)
-                    param += str(id)
-                    param += " "
-                except:
-                    print("ID is not Number")
+    def saveCommand(self):
+        cmd = "!save#"
+        print(cmd)
+        self.ct.sendToArduino(cmd)
 
-        if (param != ""):
-            param = param[:len(param)-1]
-            cmd = "!w " + param + "#"
-            print(cmd)
-            # sending cmd to arduino via port
-            self.ct.sendToArduino(cmd)
+    def writeStepCommand(self):
+        cmd = self.writeStepCommanOptionCombo.get()
+        if (cmd != ""):
+            args = [self.writeStepVars[i].get() for i in range(self.WRITESTEPNUM)]
+            param = ""
+            for arg in args:
+                if (arg != ""):
+                    try:
+                        int(arg)
+                        param += arg
+                        param += " "
+                    except:
+                        print("Not a number")
+            
+            if (param != ""):
+                param = param[:len(param)-1]
+                cmd = "!" + cmd + " " + param + "#"
+                print(cmd)
+                # Send COmmand To Arduino
+                self.ct.sendToArduino(cmd)
+            else:
+                print("Invalid input")
+            
+            # reset var
+            for var in self.writeStepVars:
+                var.set('')
         else:
-            print("Python: Invalid input")
+            print("Command is not selected!")
 
-        # Reset Entry
-        for var in self.wVars:
-            var.set('')
-
-    def wbpfCommand(self):
-        wbpfId = [self.wbpfEntrys[i].get() for i in range(self.WBPFIDNUM)]
-        
-        param = ""
-        for i in range(len(wbpfId)):
-            id = wbpfId[i]
-            if (id != ''):
-                try:
-                    id = int(id)
-                    param += str(id)
-                    param += " "
-                except:
-                    print("ID is not Number")
-
-        if (param != ""):
-            param = param[:len(param)-1]
-            cmd = "!wBPf " + param + "#"
-            print(cmd)
-            # sending cmd to arduino via port
-            self.ct.sendToArduino(cmd)
+    def writePageCommand(self):
+        cmd = self.writePageCommanOptionCombo.get()
+        if (cmd != ""):
+            args = [self.writePageVars[i].get() for i in range(self.WRITEPAGENUM)]
+            param = ""
+            for arg in args:
+                if (arg != ""):
+                    try:
+                        int(arg)
+                        param += arg
+                        param += " "
+                    except:
+                        print("Not a number")
+            
+            if (param != ""):
+                param = param[:len(param)-1]
+                cmd = "!" + cmd + " " + param + "#"
+                print(cmd)
+                # Send COmmand To Arduino
+                self.ct.sendToArduino(cmd)
+            else:
+                print("Invalid input")
+            
+            # reset var
+            for var in self.writePageVars:
+                var.set('')
         else:
-            print("Python: Invalid input")
-
-        # Reset Entry
-        for var in self.wbpfVars:
-            var.set('')
-
-    def wbpCommand(self):
-        wbpId = [self.wbpEntrys[i].get() for i in range(self.WBPIDNUM)]
-        
-        param = ""
-        for i in range(len(wbpId)):
-            id = wbpId[i]
-            if (id != ''):
-                try:
-                    id = int(id)
-                    param += str(id)
-                    param += " "
-                except:
-                    print("ID is not Number")
-
-        if (param != ""):
-            param = param[:len(param)-1]
-            cmd = "!wBP " + param + "#"
-            print(cmd)
-            # sending cmd to arduino via port
-            self.ct.sendToArduino(cmd)
-        else:
-            print("Python: Invalid input")
-
-        # Reset Entry
-        for var in self.wbpVars:
-            var.set('')
+            print("Command is not selected!")
     
     def gridMain(self, **kwargs): ######## grid -> grid_
         self.mainFrame.grid(**kwargs)

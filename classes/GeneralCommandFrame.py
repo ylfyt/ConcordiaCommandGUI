@@ -20,6 +20,18 @@ class GeneralCommandFrame(Frame):
         self.defButton = Button(self, text="DEF", font = "Helvetica 10 bold", width=10, height=2, command=self.defCommand)
         self.defButton.grid(row=0, column=0, padx=(5, 5), pady=(10, 10))
 
+
+        # PLAY COMMAND
+        self.playButton = Button(self, text="PLAY", bg="lightgreen", font = "Helvetica 10 bold", width=10, height=2, command=self.playCommand)
+        self.playButton.grid(row=0, column=1, padx=(5, 30), pady=(10, 10))
+        
+        self.PLAYIDNUM = 2
+        self.playVars = [StringVar() for i in range(self.PLAYIDNUM)]
+        self.playEntrys = [Entry(self, width=3, font = "Helvetica 14 bold", textvariable=self.playVars[i]) for i in range(self.PLAYIDNUM)]
+        for i in range(self.PLAYIDNUM):
+            self.playEntrys[i].grid(row=0, column=i+2, padx=(30, 30), pady=(10, 10))
+
+
         self.labelTextPage = Label(self, text="Page : ", font = "Helvetica 14", bg='lightblue')
         self.labelTextPage.grid(row=1, column=0, padx=(5, 5), pady=(10, 10))
 
@@ -44,6 +56,38 @@ class GeneralCommandFrame(Frame):
         cmd = "!def#"
         print(cmd)
         self.ct.sendToArduino(cmd)
+    
+    def playCommand(self):
+        playId = [self.playEntrys[i].get() for i in range(self.PLAYIDNUM)]
+        
+        param = []
+        for i in range(len(playId)):
+            id = playId[i]
+            if (id != ''):
+                try:
+                    int(id)
+                    param.append(id)
+                except:
+                    print("ID is not Number")
+
+        if (len(param) == 2):
+            if (int(param[0]) > int(param[1])):
+                print("Input Invalid")
+            else:
+                cmd = "!play " + param[0] + " " + param[1] + "#"
+                print(cmd)
+                # sending cmd to arduino via port
+                self.ct.sendToArduino(cmd)
+        elif (len(param) == 0):
+            cmd = "!play#"
+            print(cmd)
+            self.ct.sendToArduino(cmd)
+        else:
+            print("Python: Invalid input")
+
+        # Reset Entry
+        for var in self.playVars:
+            var.set('')
         
     def gCommand(self):
         stepNum = self.stepOptionCombo.get()
