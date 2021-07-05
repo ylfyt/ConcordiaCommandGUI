@@ -31,31 +31,43 @@ class GeneralCommandFrame(Frame):
         for i in range(self.PLAYIDNUM):
             self.playEntrys[i].grid(row=0, column=i+2, padx=(30, 30), pady=(10, 10))
 
+        for i in range(self.PLAYIDNUM):
+            self.playEntrys[i].bind('<Return>', self.playCommandEnter)
+
 
         self.labelTextPage = Label(self, text="Page : ", font = "Helvetica 14", bg='lightblue')
-        self.labelTextPage.grid(row=1, column=0, padx=(5, 5), pady=(10, 10))
+        self.labelTextPage.grid(row=1, column=0, padx=(5, 0), pady=(10, 10))
 
         self.pageOption = [str(i) for i in range(76)] 
-        self.pageOptionCombo = ttk.Combobox(self, values=self.pageOption, state="readonly", font = "Helvetica 12", width=10)
-        self.pageOptionCombo.grid(row=1, column=1, padx=(5, 5), pady=(10, 10))
+        self.pageOptionCombo = ttk.Combobox(self, values=self.pageOption, state="readonly", font = "Helvetica 12", width=6)
+        self.pageOptionCombo.grid(row=1, column=1, padx=(5, 0), pady=(10, 10))
 
         self.labelTextStep = Label(self, text="Step : ", font = "Helvetica 14", bg='lightblue')
-        self.labelTextStep.grid(row=1, column=2, padx=(5, 5), pady=(10, 10))
+        self.labelTextStep.grid(row=1, column=2, padx=(5, 0), pady=(10, 10))
 
         self.stepOption = [str(i+1) for i in range(20)] 
-        self.stepOptionCombo = ttk.Combobox(self, values=self.stepOption, state="readonly", font = "Helvetica 12", width=10)
-        self.stepOptionCombo.grid(row=1, column=3, padx=(5, 5), pady=(10, 10))
-        
-        self.gButton = Button(self, text="G",width=7, font = "Helvetica 12", command=self.gCommand)
-        self.gButton.grid(row=1, column=4, padx=(5, 5), pady=(10, 10))
+        self.stepOptionCombo = ttk.Combobox(self, values=self.stepOption, state="readonly", font = "Helvetica 12", width=6)
+        self.stepOptionCombo.grid(row=1, column=3, padx=(5, 0), pady=(10, 10))
 
         self.pageOptionCombo.bind("<<ComboboxSelected>>", self.pageSelected)
         self.stepOptionCombo.bind("<<ComboboxSelected>>", self.stepSelected)
+        
+        self.gButton = Button(self, text="G",width=10, height=2, font = "Helvetica 10 bold", command=self.gCommand)
+        self.gButton.grid(row=2, column=0, padx=(5, 0), pady=(10, 10))
+
+
+        self.prevButton = Button(self, text="<<",width=10, height=2, font = "Helvetica 10 bold", command=self.prevCommand)
+        self.prevButton.grid(row=2, column=1, padx=(5, 0), pady=(10, 10))
+        self.nextButton = Button(self, text=">>",width=10, height=2, font = "Helvetica 10 bold", command=self.nextCommand)
+        self.nextButton.grid(row=2, column=2, padx=(5, 5), pady=(10, 10))
 
     def defCommand(self):
         cmd = "!def#"
         print(cmd)
         self.ct.sendToArduino(cmd)
+    
+    def playCommandEnter(self, event):
+        self.playCommand()
     
     def playCommand(self):
         playId = [self.playEntrys[i].get() for i in range(self.PLAYIDNUM)]
@@ -89,6 +101,32 @@ class GeneralCommandFrame(Frame):
         for var in self.playVars:
             var.set('')
         
+    def prevCommand(self):
+        # print("prev step")
+        stepNum = self.stepOptionCombo.get()
+        if (stepNum != ''):
+            stepNum = int(stepNum) - 1
+            if (stepNum >= 0):
+                self.stepOptionCombo.set(str(stepNum))
+                self.gCommand()
+            else:
+                print("Step limit")
+        else:
+            print("Select step first")
+    
+    def nextCommand(self):
+        # print("next step")
+        stepNum = self.stepOptionCombo.get()
+        if (stepNum != ''):
+            stepNum = int(stepNum) + 1
+            if (stepNum <= 20):
+                self.stepOptionCombo.set(str(stepNum))
+                self.gCommand()
+            else:
+                print("Step limit")
+        else:
+            print("Select step first")
+
     def gCommand(self):
         stepNum = self.stepOptionCombo.get()
         if (stepNum != ''):

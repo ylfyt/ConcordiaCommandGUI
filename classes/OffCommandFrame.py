@@ -23,6 +23,9 @@ class OffCommandFrame(Frame):
         self.offEntrys = [Entry(self, width=3, font = "Helvetica 14 bold", textvariable=self.offVars[i]) for i in range(self.OFFIDNUM)]
         for i in range(self.OFFIDNUM):
             self.offEntrys[i].grid(row=0, column=i+1, padx=(5, 5), pady=(10, 10))
+        
+        for i in range(self.OFFIDNUM):
+            self.offEntrys[i].bind('<Return>', self.offCommandEnter)
 
         self.onAllButton = Button(self, text="ON ALL", font = "Helvetica 10 bold", width=10, height=2, bg='lime green', command=self.onAllCommand)
         self.onAllButton.grid(row=1, column=0, padx=(5, 5), pady=(10, 10))
@@ -49,6 +52,9 @@ class OffCommandFrame(Frame):
         self.offAllButton = Button(self, text="OFF ALL", font = "Helvetica 10 bold", width=10, height=2, bg='red', command=self.offAllCommand)
         self.offAllButton.grid(row=2, column=4, padx=(5, 5), pady=(10, 10))
     
+    def offCommandEnter(self, event):
+        self.offCommand()
+
     def offCommand(self):
         offId = [self.offEntrys[i].get() for i in range(self.OFFIDNUM)]
         
