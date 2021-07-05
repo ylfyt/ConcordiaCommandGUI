@@ -40,6 +40,9 @@ class WriteCommandFrame(Frame):
         for i in range(self.WRITESTEPNUM):
             self.writeStepEntrys[i].grid(row=1, column=i+2, padx=(10, 10), pady=(10, 10))
         
+        for i in range(self.WRITESTEPNUM):
+            self.writeStepEntrys[i].bind('<Return>', self.writeStepCommandEnter)
+        
 
         # WRITE PAGE COMMAND
         self.writePageButton = Button(self, text="WRITE PAGE", font = "Helvetica 10 bold", width=10, height=2, command=self.writePageCommand)
@@ -55,6 +58,9 @@ class WriteCommandFrame(Frame):
         for i in range(self.WRITEPAGENUM):
             self.writePageEntrys[i].grid(row=2, column=i+2, padx=(10, 10), pady=(10, 10))
         
+        for i in range(self.WRITEPAGENUM):
+            self.writePageEntrys[i].bind('<Return>', self.writePageCommandEnter)
+        
     
     def getCommand(self):
         cmd = "!get#"
@@ -65,6 +71,12 @@ class WriteCommandFrame(Frame):
         cmd = "!save#"
         print(cmd)
         self.ct.sendToArduino(cmd)
+
+    def writeStepCommandEnter(self, event):
+        self.writeStepCommand()
+    
+    def writePageCommandEnter(self, event):
+        self.writePageCommand()
 
     def writeStepCommand(self):
         cmd = self.writeStepCommanOptionCombo.get()

@@ -32,11 +32,7 @@ class ManualCommandFrame(Frame):
             self.ct.sendToArduino(cmd)
     
     def sendCommandEnter(self, event):
-        cmd = self.cmdVar.get()
-        self.cmdVar.set("")
-        if (cmd != ""):
-            print(cmd)
-            self.ct.sendToArduino(cmd)
+        self.sendCommand()
 
         
     
