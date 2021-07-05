@@ -53,6 +53,7 @@ class OffCommandFrame(Frame):
         self.offAllButton.grid(row=2, column=4, padx=(5, 5), pady=(10, 10))
     
     def offCommandEnter(self, event):
+        self.offEntrys[0].focus_set()
         self.offCommand()
 
     def offCommand(self):

@@ -67,6 +67,7 @@ class GeneralCommandFrame(Frame):
         self.ct.sendToArduino(cmd)
     
     def playCommandEnter(self, event):
+        self.playEntrys[0].focus_set()
         self.playCommand()
     
     def playCommand(self):

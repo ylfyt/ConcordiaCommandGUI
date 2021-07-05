@@ -73,9 +73,11 @@ class WriteCommandFrame(Frame):
         self.ct.sendToArduino(cmd)
 
     def writeStepCommandEnter(self, event):
+        self.writeStepEntrys[0].focus_set()
         self.writeStepCommand()
     
     def writePageCommandEnter(self, event):
+        self.writePageEntrys[0].focus_set()
         self.writePageCommand()
 
     def writeStepCommand(self):
