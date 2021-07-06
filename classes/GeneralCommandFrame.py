@@ -39,14 +39,14 @@ class GeneralCommandFrame(Frame):
         self.labelTextPage.grid(row=1, column=0, padx=(5, 0), pady=(10, 10))
 
         self.pageOption = [str(i) for i in range(76)] 
-        self.pageOptionCombo = ttk.Combobox(self, values=self.pageOption, state="readonly", font = "Helvetica 12", width=6)
+        self.pageOptionCombo = ttk.Combobox(self, values=self.pageOption, state="readonly", font = "Helvetica 12 bold", width=6)
         self.pageOptionCombo.grid(row=1, column=1, padx=(5, 0), pady=(10, 10))
 
         self.labelTextStep = Label(self, text="Step : ", font = "Helvetica 14", bg='lightblue')
         self.labelTextStep.grid(row=1, column=2, padx=(5, 0), pady=(10, 10))
 
         self.stepOption = [str(i+1) for i in range(20)] 
-        self.stepOptionCombo = ttk.Combobox(self, values=self.stepOption, state="readonly", font = "Helvetica 12", width=6)
+        self.stepOptionCombo = ttk.Combobox(self, values=self.stepOption, state="readonly", font = "Helvetica 12 bold", width=6)
         self.stepOptionCombo.grid(row=1, column=3, padx=(5, 0), pady=(10, 10))
 
         self.pageOptionCombo.bind("<<ComboboxSelected>>", self.pageSelected)
