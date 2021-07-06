@@ -67,7 +67,6 @@ class GeneralCommandFrame(Frame):
         self.ct.sendToArduino(cmd)
     
     def playCommandEnter(self, event):
-        self.playEntrys[0].focus_set()
         self.playCommand()
     
     def playCommand(self):
@@ -101,6 +100,7 @@ class GeneralCommandFrame(Frame):
         # Reset Entry
         for var in self.playVars:
             var.set('')
+        self.playEntrys[0].focus_set()
         
     def prevCommand(self):
         # print("prev step")

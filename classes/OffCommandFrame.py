@@ -53,7 +53,6 @@ class OffCommandFrame(Frame):
         self.offAllButton.grid(row=2, column=4, padx=(5, 5), pady=(10, 10))
     
     def offCommandEnter(self, event):
-        self.offEntrys[0].focus_set()
         self.offCommand()
 
     def offCommand(self):
@@ -84,6 +83,7 @@ class OffCommandFrame(Frame):
         # Reset Entry
         for var in self.offVars:
             var.set('')
+        self.offEntrys[0].focus_set()
         
     def oaCommand(self):
         cmd = "!oa#"

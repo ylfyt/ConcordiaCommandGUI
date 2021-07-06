@@ -73,11 +73,9 @@ class WriteCommandFrame(Frame):
         self.ct.sendToArduino(cmd)
 
     def writeStepCommandEnter(self, event):
-        self.writeStepEntrys[0].focus_set()
         self.writeStepCommand()
     
     def writePageCommandEnter(self, event):
-        self.writePageEntrys[0].focus_set()
         self.writePageCommand()
 
     def writeStepCommand(self):
@@ -106,6 +104,7 @@ class WriteCommandFrame(Frame):
             # reset var
             for var in self.writeStepVars:
                 var.set('')
+            self.writeStepEntrys[0].focus_set()
         else:
             print("Command is not selected!")
 
@@ -135,6 +134,7 @@ class WriteCommandFrame(Frame):
             # reset var
             for var in self.writePageVars:
                 var.set('')
+            self.writePageEntrys[0].focus_set()
         else:
             print("Command is not selected!")
     
