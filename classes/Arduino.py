@@ -33,13 +33,6 @@ class Arduino:
                         line = line.decode("utf-8")
                         print(line, end="")
 
-                if ("play" in self.command):
-                    while self.arduinoSerial.in_waiting():
-                        data = self.arduinoSerial.readlines()
-                        for line in data:
-                            line = line.decode("utf-8")
-                            print(line, end="")
-
             except:
                 print("Cannot get data")
         else:
