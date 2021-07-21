@@ -130,7 +130,10 @@ class GeneralCommandFrame(Frame):
 
     def gCommand(self):
         stepNum = self.stepOptionCombo.get()
-        if (stepNum != ''):
+        if (self.pageOptionCombo.get() != ''):
+            if (stepNum == ''):
+                self.stepOptionCombo.set('1')
+                stepNum = '1'
             cmd = "!g " + stepNum + "#"
             print(cmd)
             self.ct.sendToArduino(cmd)

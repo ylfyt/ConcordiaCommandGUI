@@ -30,7 +30,7 @@ class WriteCommandFrame(Frame):
         self.writeStepButton = Button(self, text="WRITE STEP", font = "Helvetica 10 bold", width=10, height=2, command=self.writeStepCommand)
         self.writeStepButton.grid(row=1, column=0, padx=(5, 5), pady=(10, 10))
 
-        self.writeStepCommadOption = ["w", "wh", "wra", "wla", "whip", "wf", "wrf", "wlf"]
+        self.writeStepCommadOption = ["w", "wh", "wa", "wra", "wla", "whip", "wf", "wrf", "wlf"]
         self.writeStepCommanOptionCombo = ttk.Combobox(self, values=self.writeStepCommadOption, state="readonly", font = "Helvetica 12 bold", width=7)
         self.writeStepCommanOptionCombo.grid(row=1, column=1, padx=(0, 5), pady=(10, 10))
 
