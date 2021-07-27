@@ -41,7 +41,10 @@ class ConnectionFrame(Frame):
             print("Cannot found any port")
         
         self.portOptionCombo['values'] = cons
-        self.portOptionCombo.set('')
+        if (len(cons) == 1):
+            self.portOptionCombo.set(cons[0])
+        else:
+            self.portOptionCombo.set('')
 
     def connect(self):
         port = self.portOptionCombo.get()
